@@ -5,7 +5,7 @@ Created on Tue Nov  4 12:58:42 2025
 @author: ingeb
 """
 
-# 1. importar
+# 1. 
 
 import pulp as lp
 
