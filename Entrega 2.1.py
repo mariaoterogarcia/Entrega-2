@@ -5,11 +5,11 @@ Created on Tue Nov  4 12:58:42 2025
 @author: ingeb
 """
 
-# 1. 
+# 1. Importar
 
 import pulp as lp
 
-# 2. crear problema
+# 2. Crear problema
 
 problema = lp.LpProblem('Entrega 2', lp.LpMinimize)
 # 3. componentes y parámetros
@@ -27,12 +27,12 @@ origen = {'p1': 'N1', 'p2': 'N1'}
 destino = {'p1': 'N3', 'p2': 'N4'}
 demanda = {'p1': 1, 'p2': 1}
 
-# 4. variables
+# 4. Variables
 M=1000
 x = lp.LpVariable.dicts('x',[(i, j, k) for (i, j) in arcos for k in productos],lowBound=0, cat='Continuous')
 y = lp.LpVariable.dicts('y', [(i, j) for (i, j) in arcos],lowBound=0, upBound=1, cat='Binary')
 
-# 5. restricciones
+# 5. Restricciones
 for k in productos:
     for n in nodos:
         salida = lp.lpSum(x[(i, j, k)] for (i, j) in arcos if i == n)
@@ -48,10 +48,10 @@ for k in productos:
 for (i, j) in arcos:
     problema += (lp.lpSum(x[(i, j, k)] for k in productos) <= M * y[(i, j)])
     
-# 6. función objetivo
+# 6. Función objetivo
 problema += lp.lpSum(arcos[(i, j)]['f'] * y[(i, j)] + arcos[(i, j)]['c'] * lp.lpSum(x[(i, j, k)] for k in productos)for (i, j) in arcos)
 
-# 7. solve + print
+# 7. Solve + print
 problema.solve()
 lp.LpStatus[problema.status]
 
